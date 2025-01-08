@@ -44,7 +44,7 @@ export default function SignUp() {
       <div className="w-full max-w-md bg-black bg-opacity-75 p-8 rounded-lg">
         <div className="flex items-center justify-center mb-8">
           <Play className="w-12 h-12 text-red-600" />
-          <span className="text-2xl font-bold text-white ml-2">NetflixClone</span>
+          <span className="text-2xl font-bold text-white ml-2">Brutuflix</span>
         </div>
         
         <form onSubmit={handleSignUp} className="space-y-6">
