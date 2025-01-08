@@ -20,7 +20,7 @@ export default function Layout() {
             <div className="flex items-center">
               <Link to="/" className="flex items-center text-red-600">
                 <Play className="w-8 h-8" />
-                <span className="text-xl font-bold text-white ml-2">NetflixClone</span>
+                <span className="text-xl font-bold text-white ml-2">Brutuflix</span>
               </Link>
               <nav className="ml-8">
                 <Link to="/browse" className="text-gray-300 hover:text-white px-3 py-2">
