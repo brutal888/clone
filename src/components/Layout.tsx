@@ -21,7 +21,7 @@ export default function Layout() {
             <div className="flex items-center space-x-8">
               <Link to="/" className="flex items-center text-red-600">
                 <Play className="w-8 h-8" />
-                <span className="text-xl font-bold text-white ml-2">NetflixClone</span>
+                <span className="text-xl font-bold text-white ml-2">Brutuflix</span>
               </Link>
               <nav className="hidden md:flex items-center space-x-6">
                 <Link 
