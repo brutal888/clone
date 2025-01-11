@@ -4,32 +4,63 @@ import { supabase } from '../lib/supabase';
 import { Play, Plus, Check } from 'lucide-react';
 import { useAuthStore } from '../store/auth';
 
+const SAMPLE_MOVIES = [
+  {
+    id: '1',
+    title: 'Inception',
+    description: 'A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.',
+    thumbnail_url: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=800',
+    video_url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4',
+    release_year: 2010,
+  },
+  {
+    id: '2',
+    title: 'The Matrix',
+    description: 'A computer programmer discovers that reality as he knows it is a simulation created by machines, and joins a rebellion to break free.',
+    thumbnail_url: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800',
+    video_url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4',
+    release_year: 1999,
+  },
+  {
+    id: '3',
+    title: 'Interstellar',
+    description: 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity\'s survival.',
+    thumbnail_url: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800',
+    video_url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4',
+    release_year: 2014,
+  },
+  {
+    id: '4',
+    title: 'Blade Runner 2049',
+    description: 'A young blade runner\'s discovery of a long-buried secret leads him to track down former blade runner Rick Deckard.',
+    thumbnail_url: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800',
+    video_url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4',
+    release_year: 2017,
+  },
+  {
+    id: '5',
+    title: 'The Shawshank Redemption',
+    description: 'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
+    thumbnail_url: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?w=800',
+    video_url: 'https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4',
+    release_year: 1994,
+  }
+];
+
+const CATEGORIES = [
+  { id: '1', name: 'Trending Now' },
+  { id: '2', name: 'Popular on Netflix' },
+  { id: '3', name: 'Sci-Fi Hits' },
+  { id: '4', name: 'Award-Winning Films' }
+];
+
 export default function Browse() {
-  const [movies, setMovies] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
   const [watchlist, setWatchlist] = useState<Set<string>>(new Set());
   const { profile } = useAuthStore();
 
   useEffect(() => {
-    loadMovies();
-    loadCategories();
     loadWatchlist();
   }, []);
-
-  async function loadMovies() {
-    const { data } = await supabase
-      .from('movies')
-      .select('*')
-      .order('created_at', { ascending: false });
-    setMovies(data || []);
-  }
-
-  async function loadCategories() {
-    const { data } = await supabase
-      .from('categories')
-      .select('*');
-    setCategories(data || []);
-  }
 
   async function loadWatchlist() {
     if (!profile) return;
@@ -62,48 +93,46 @@ export default function Browse() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Hero Section */}
-      {movies[0] && (
-        <div className="relative h-[70vh] w-full">
-          <div className="absolute inset-0">
-            <img
-              src={movies[0].thumbnail_url}
-              alt={movies[0].title}
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
-          </div>
-          <div className="absolute bottom-0 left-0 p-8 max-w-2xl">
-            <h1 className="text-5xl font-bold mb-4">{movies[0].title}</h1>
-            <p className="text-lg mb-6">{movies[0].description}</p>
-            <div className="flex gap-4">
-              <Link
-                to={`/watch/${movies[0].id}`}
-                className="flex items-center gap-2 px-8 py-3 bg-white text-black rounded hover:bg-gray-200 transition"
-              >
-                <Play className="w-5 h-5" /> Play
-              </Link>
-              <button
-                onClick={() => toggleWatchlist(movies[0].id)}
-                className="flex items-center gap-2 px-8 py-3 bg-gray-500 bg-opacity-50 rounded hover:bg-opacity-70 transition"
-              >
-                {watchlist.has(movies[0].id) ? (
-                  <><Check className="w-5 h-5" /> In Watchlist</>
-                ) : (
-                  <><Plus className="w-5 h-5" /> Add to Watchlist</>
-                )}
-              </button>
-            </div>
+      <div className="relative h-[80vh] w-full">
+        <div className="absolute inset-0">
+          <img
+            src={SAMPLE_MOVIES[0].thumbnail_url}
+            alt={SAMPLE_MOVIES[0].title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50" />
+        </div>
+        <div className="absolute bottom-0 left-0 p-8 max-w-2xl">
+          <h1 className="text-6xl font-bold mb-4">{SAMPLE_MOVIES[0].title}</h1>
+          <p className="text-lg mb-6">{SAMPLE_MOVIES[0].description}</p>
+          <div className="flex gap-4">
+            <Link
+              to={`/watch/${SAMPLE_MOVIES[0].id}`}
+              className="flex items-center gap-2 px-8 py-3 bg-white text-black rounded hover:bg-gray-200 transition"
+            >
+              <Play className="w-5 h-5" /> Play
+            </Link>
+            <button
+              onClick={() => toggleWatchlist(SAMPLE_MOVIES[0].id)}
+              className="flex items-center gap-2 px-8 py-3 bg-gray-500 bg-opacity-50 rounded hover:bg-opacity-70 transition"
+            >
+              {watchlist.has(SAMPLE_MOVIES[0].id) ? (
+                <><Check className="w-5 h-5" /> In Watchlist</>
+              ) : (
+                <><Plus className="w-5 h-5" /> Add to Watchlist</>
+              )}
+            </button>
           </div>
         </div>
-      )}
+      </div>
 
       {/* Categories */}
       <div className="px-8 py-12 space-y-12">
-        {categories.map(category => (
-          <div key={category.id}>
+        {CATEGORIES.map(category => (
+          <div key={category.id} className="-mt-32 relative z-10">
             <h2 className="text-2xl font-bold mb-4">{category.name}</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {movies.map(movie => (
+              {SAMPLE_MOVIES.map(movie => (
                 <div key={movie.id} className="relative group">
                   <Link to={`/watch/${movie.id}`}>
                     <img
@@ -111,6 +140,11 @@ export default function Browse() {
                       alt={movie.title}
                       className="w-full aspect-video object-cover rounded-md transition transform group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity" />
+                    <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <h3 className="text-sm font-bold">{movie.title}</h3>
+                      <p className="text-xs text-gray-300">{movie.release_year}</p>
+                    </div>
                   </Link>
                   <button
                     onClick={() => toggleWatchlist(movie.id)}
