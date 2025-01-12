@@ -100,21 +100,21 @@ export default function Browse() {
             alt={SAMPLE_MOVIES[0].title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
         </div>
         <div className="absolute bottom-0 left-0 p-8 max-w-2xl">
-          <h1 className="text-6xl font-bold mb-4">{SAMPLE_MOVIES[0].title}</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">{SAMPLE_MOVIES[0].title}</h1>
           <p className="text-lg mb-6">{SAMPLE_MOVIES[0].description}</p>
-          <div className="flex gap-4">
+          <div className="flex flex-col sm:flex-row gap-4">
             <Link
               to={`/watch/${SAMPLE_MOVIES[0].id}`}
-              className="flex items-center gap-2 px-8 py-3 bg-white text-black rounded hover:bg-gray-200 transition"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-white text-black rounded hover:bg-gray-200 transition"
             >
               <Play className="w-5 h-5" /> Play
             </Link>
             <button
               onClick={() => toggleWatchlist(SAMPLE_MOVIES[0].id)}
-              className="flex items-center gap-2 px-8 py-3 bg-gray-500 bg-opacity-50 rounded hover:bg-opacity-70 transition"
+              className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-500 bg-opacity-50 rounded hover:bg-opacity-70 transition"
             >
               {watchlist.has(SAMPLE_MOVIES[0].id) ? (
                 <><Check className="w-5 h-5" /> In Watchlist</>
@@ -127,12 +127,12 @@ export default function Browse() {
       </div>
 
       {/* Categories */}
-      <div className="px-8 py-12 space-y-12">
-        {CATEGORIES.map(category => (
-          <div key={category.id} className="-mt-32 relative z-10">
+      <div className="px-4 md:px-8 py-12 space-y-12">
+        {CATEGORIES.map((category, index) => (
+          <div key={category.id} className={index === 0 ? "-mt-32 relative z-10" : ""}>
             <h2 className="text-2xl font-bold mb-4">{category.name}</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {SAMPLE_MOVIES.map(movie => (
+              {SAMPLE_MOVIES.map((movie) => (
                 <div key={movie.id} className="relative group">
                   <Link to={`/watch/${movie.id}`}>
                     <img
@@ -165,3 +165,4 @@ export default function Browse() {
     </div>
   );
 }
+

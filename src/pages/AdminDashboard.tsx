@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Film, Users, Plus, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../store/auth';
 
 export default function AdminDashboard() {
+  const { isAdmin } = useAuthStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAdmin) {
+      navigate('/browse');
+    }
+  }, [isAdmin, navigate]);
+
   const [activeTab, setActiveTab] = useState<'movies' | 'users'>('movies');
   const [movies, setMovies] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
@@ -73,6 +84,8 @@ export default function AdminDashboard() {
       loadData();
     }
   }
+
+  if (!isAdmin) return null;
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
@@ -225,3 +238,4 @@ export default function AdminDashboard() {
     </div>
   );
 }
+

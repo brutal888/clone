@@ -22,7 +22,21 @@ export default function Login() {
       if (error) throw error;
       
       setUser(data.user);
-      navigate('/browse');
+
+      // Fetch the user's profile to check if they're an admin
+      const { data: profileData, error: profileError } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('user_id', data.user.id)
+        .single();
+
+      if (profileError) throw profileError;
+
+      if (profileData.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/browse');
+      }
     } catch (error: any) {
       setError(error.message);
     }
@@ -83,3 +97,4 @@ export default function Login() {
     </div>
   );
 }
+
